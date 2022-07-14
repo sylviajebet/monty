@@ -2,42 +2,10 @@
 #define MONTY_H
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdbool.h>
 #include <ctype.h>
-#include <fcntl.h>
+#include <string.h>
 
-/**monty errors defined*/
-#define MONTY_ERROR_NONE 0
-#define MONTY_ERROR_INVALID_OPCODE 1
-#define MONTY_ERROR_PUSH_MISSING_ARG 2
-#define MONTY_ERROR_PUSH_INVALID_ARG 3
-#define MONTY_ERROR_PINT_EMPTY 4
-#define MONTY_ERROR_POP_EMPTY 5
-
-/**
- * struct monty_s - representation of a monty stack (or queue)
- * @save_ptr: pointer
- * @line: integer for lne number
- * @token: character for a token
- * @mode: integer value for the mode
- * @error: integer to show an alert for error
- *
- * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO Holberton project
- */
-typedef struct monty_s
-{
-	char  *save_ptr;
-	int line;
-	char *token;
-	int mode;
-	int error;
-} monty_t;
-
-extern char *operand;
-
+#define DELIMATOR "\n\t\r "
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -46,7 +14,7 @@ extern char *operand;
  *
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO Holberton project
- */
+ **/
 typedef struct stack_s
 {
 	int n;
@@ -61,7 +29,7 @@ typedef struct stack_s
  *
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
- */
+ **/
 typedef struct instruction_s
 {
 	char *opcode;
@@ -69,31 +37,22 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct line_s - line content and its number
- * @content: line content
- * @number: line number
- *
- * Description: stores line of the monty source code
- */
-typedef struct line_s
-{
-	char *content;
-	int number;
-} line_t;
+* struct global_s - hold global variables
+* @return_val: return value
+* @mol: mode of list
+* @cc: code command
+* @apc: push command
+**/
 
-line_t *textfile_to_array(const char *filename);
-void op_push(stack_t **stack, unsigned int line_number);
-void op_pall(stack_t **stack, unsigned int line_number);
-void op_pint(stack_t **stack, unsigned int line_number);
-void op_pop(stack_t **stack, unsigned int line_number);
-void op_swap(stack_t **stack, unsigned int line_number);
-
-char **split_line(char *line);
-void (*get_op_func(char *s))(stack_t**, unsigned int);
-
-
-void free_lines(line_t *head);
-void free_stack(stack_t *head);
-int _atoi(char *s, int *n);
-
+extern instruction_t opcodes[];
+unsigned int len(stack_t **stack);
+void free_stack(stack_t *stack);
+void nop(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void push(stack_t **stack, char *n, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+int find_opcode(stack_t **stack, char *opcode, int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+size_t lol(stack_t *h);
 #endif

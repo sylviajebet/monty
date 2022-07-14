@@ -3,9 +3,9 @@
 /**
 *push - add a neode in the list
 *@stack: pointer to a pointer to the doubly linked list
-*@line_number: line where there is an error
 *@n: character
-*Return: void
+*@line_number: line where there is an error
+*Return: nothing
 */
 void push(stack_t **stack, char *n, unsigned int line_number)
 {
